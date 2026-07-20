@@ -1,0 +1,11 @@
+<% content_for :title, "New bond" %>
+
+<h1>New bond</h1>
+
+<%= render "form", bond: @bond %>
+
+<br>
+
+<div>
+  <%= link_to "Back to bonds", bonds_path %>
+</div>

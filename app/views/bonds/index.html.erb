@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Bonds" %>
+
+<h1>Bonds</h1>
+
+<div id="bonds">
+  <% @bonds.each do |bond| %>
+    <%= render bond %>
+    <p>
+      <%= link_to "Show this bond", bond %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New bond", new_bond_path %>

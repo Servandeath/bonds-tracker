@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @bond %>
+
+<div>
+  <%= link_to "Edit this bond", edit_bond_path(@bond) %> |
+  <%= link_to "Back to bonds", bonds_path %>
+
+  <%= button_to "Destroy this bond", @bond, method: :delete %>
+</div>

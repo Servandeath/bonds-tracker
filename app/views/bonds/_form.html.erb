@@ -1,0 +1,52 @@
+<%= form_with(model: bond) do |form| %>
+  <% if bond.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(bond.errors.count, "error") %> prohibited this bond from being saved:</h2>
+
+      <ul>
+        <% bond.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :isin, style: "display: block" %>
+    <%= form.text_field :isin %>
+  </div>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :issuer, style: "display: block" %>
+    <%= form.text_field :issuer %>
+  </div>
+
+  <div>
+    <%= form.label :coupon_rate, style: "display: block" %>
+    <%= form.text_field :coupon_rate %>
+  </div>
+
+  <div>
+    <%= form.label :face_value, style: "display: block" %>
+    <%= form.text_field :face_value %>
+  </div>
+
+  <div>
+    <%= form.label :maturity_date, style: "display: block" %>
+    <%= form.date_field :maturity_date %>
+  </div>
+
+  <div>
+    <%= form.label :currency, style: "display: block" %>
+    <%= form.text_field :currency %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

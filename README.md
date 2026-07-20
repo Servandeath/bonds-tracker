@@ -1,24 +1,25 @@
-# README
+# Bonds Tracker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Личный дневник-скринер по рублёвому долговому рынку (ОФЗ, корпоративные облигации).
+Данные — MOEX ISS API.
 
-Things you may want to cover:
+## Цели проекта
 
-* Ruby version
+- Практическое знакомство с Ruby и Rails (первый проект на языке)
+- Портфель-дневник инвестора: учёт покупок, купонных выплат, доходности
+- Аналитический скринер: фильтры по эмитентам, ставкам, срокам погашения
+- Полигон для отработки практик: авторизация, админка, расчётная математика (YTM, дюрация, НКД), бизнес-логика
 
-* System dependencies
+## Стек
 
-* Configuration
+- Ruby 3.4 / Rails 8
+- PostgreSQL
+- Ransack (фильтры), Chartkick (графики)
 
-* Database creation
+## Статус
 
-* Database initialization
+В активной разработке (учебный проект).
 
-* How to run the test suite
+## Источник данных
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+[MOEX ISS API](https://iss.moex.com/iss) — публичный API Московской биржи.

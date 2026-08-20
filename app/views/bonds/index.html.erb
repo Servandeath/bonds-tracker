@@ -1,16 +1,69 @@
-<p style="color: green"><%= notice %></p>
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-<% content_for :title, "Bonds" %>
+<div class="container-fluid py-3">
+  <h1 class="mb-3">Облигации</h1>
 
-<h1>Bonds</h1>
-
-<div id="bonds">
-  <% @bonds.each do |bond| %>
-    <%= render bond %>
-    <p>
-      <%= link_to "Show this bond", bond %>
-    </p>
+  <%= search_form_for @q, url: bonds_path, method: :get, html: {class: "row g-2 mb-3"} do |f| %>
+    <div class="col-md-3">
+      <%= f.search_field :name_cont, placeholder: "Название", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= f.number_field :coupon_rate_gteq, placeholder: "Купон от %", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= f.number_field :coupon_rate_lteq, placeholder: "Купон до %", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= f.date_field :maturity_date_gteq, placeholder: "Погашение от", class: "form-control" %>
+    </div>
+    <div class="col-md-2">
+      <%= f.select :currency_eq, [["Любая", ""], ["RUB/SUR", "SUR"], ["CNY", "CNY"]], {}, class: "form-select" %>
+    </div>
+    <div class="col-md-1">
+      <%= f.submit "Найти", class: "btn btn-primary w-100" %>
+    </div>
   <% end %>
-</div>
 
-<%= link_to "New bond", new_bond_path %>
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <span class="text-muted">Найдено: <%= @bonds.total_count %></span>
+    <div>
+      Показывать:
+      <% [50, 100, 250, 500].each do |n| %>
+        <%= link_to n, bonds_path(q: params[:q]&.to_unsafe_h, per_page: n), class: "btn btn-sm #{ params[:per_page].to_i == n ? 'btn-primary' : 'btn-outline-secondary' } ms-1" %>
+      <% end %>
+    </div>
+  </div>
+
+  <table class="table table-striped table-hover table-sm">
+    <thead class="table-dark">
+      <tr>
+        <th><%= sort_link @q, :isin, "ISIN" %></th>
+        <th><%= sort_link @q, :name, "Название" %></th>
+        <th><%= sort_link @q, :issuer, "Эмитент" %></th>
+        <th><%= sort_link @q, :coupon_rate, "Купон %" %></th>
+        <th><%= sort_link @q, :face_value, "Номинал" %></th>
+        <th><%= sort_link @q, :maturity_date, "Погашение" %></th>
+        <th>Валюта</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bonds.each do |bond| %>
+        <tr>
+          <td><%= bond.isin %></td>
+          <td><%= bond.name %></td>
+          <td><%= bond.issuer %></td>
+          <td><%= bond.coupon_rate || "—" %></td>
+          <td><%= bond.face_value %></td>
+          <td><%= bond.maturity_date %></td>
+          <td><%= bond.currency %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @bonds %>
+</div>

@@ -3,8 +3,11 @@ class BondsController < ApplicationController
 
   # GET /bonds or /bonds.json
   def index
-    @bonds = Bond.all
-  end
+    @q = Bond.ransack(params[:q])
+    @bonds = @q.result.order(:maturity_date)
+              .page(params[:page])
+              .per(params[:per_page] || 50)
+end
 
   # GET /bonds/1 or /bonds/1.json
   def show

@@ -6,6 +6,15 @@
 
 <div class="container-fluid py-3">
   <h1 class="mb-3">Облигации</h1>
+  <div class="mb-2">
+  <small class="text-muted me-2">Колонки:</small>
+  <% ["ISIN", "Название", "Эмитент", "Купон %", "Номинал", "Погашение", "Валюта"].each_with_index do |col, i| %>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input col-toggle" type="checkbox" id="col_<%= i %>" data-col="<%= i %>" checked>
+      <label class="form-check-label" for="col_<%= i %>"><%= col %></label>
+    </div>
+  <% end %>
+</div>
 
   <%= search_form_for @q, url: bonds_path, method: :get, html: {class: "row g-2 mb-3"} do |f| %>
     <div class="col-md-3">
@@ -66,4 +75,23 @@
   </table>
 
   <%= paginate @bonds %>
+  <script>
+  const toggles = document.querySelectorAll('.col-toggle');
+  const saved = JSON.parse(localStorage.getItem('bondCols') || '{}');
+
+  toggles.forEach(cb => {
+    const col = cb.dataset.col;
+    if (saved[col] === false) { cb.checked = false; toggleCol(col, false); }
+    cb.addEventListener('change', () => {
+      toggleCol(col, cb.checked);
+      saved[col] = cb.checked;
+      localStorage.setItem('bondCols', JSON.stringify(saved));
+    });
+  });
+
+  function toggleCol(col, show) {
+    document.querySelectorAll(`tr td:nth-child(${+col+1}), tr th:nth-child(${+col+1})`)
+      .forEach(el => el.style.display = show ? '' : 'none');
+  }
+</script>
 </div>

@@ -67,4 +67,4 @@ end
 
 gem "kaminari", "~> 1.2"
 
-gem "ransack", "~> 4.4"
+gem "ransack", "~> 5.0"
